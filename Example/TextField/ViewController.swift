@@ -71,7 +71,7 @@ class ViewController: UIViewController {
 
         textField.supplyView = supplyView
         textField.supplyView?.backgroundColor = .red
-        textField.supplyViewMode = .custom(false, true, false, true)
+        textField.supplyViewMode = .always
         textField.supplyViewSpacing = 5
         textField.supplyViewAlignment = .fill
         
