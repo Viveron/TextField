@@ -1,0 +1,24 @@
+{
+  "name": "TextField",
+  "version": "1.0.0",
+  "summary": "Extended version of UITextField.",
+  "description": "Extended version of UITextField. Lightweight implementation with helpful additional elements and objects.",
+  "homepage": "https://github.com/viveron/TextField",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "viveron": "shabanov.dev.git@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/viveron/TextField.git",
+    "tag": "1.0.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "swift_versions": "5.0",
+  "source_files": "TextField/Classes/**/*",
+  "swift_version": "5.0"
+}

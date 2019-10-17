@@ -1,9 +1,9 @@
 # TextField
 
-[![CI Status](https://img.shields.io/travis/viveron/TextField.svg?style=flat)](https://travis-ci.org/viveron/TextField)
-[![Version](https://img.shields.io/cocoapods/v/TextField.svg?style=flat)](https://cocoapods.org/pods/TextField)
-[![License](https://img.shields.io/cocoapods/l/TextField.svg?style=flat)](https://cocoapods.org/pods/TextField)
-[![Platform](https://img.shields.io/cocoapods/p/TextField.svg?style=flat)](https://cocoapods.org/pods/TextField)
+[![Version](https://img.shields.io/github/tag/Viveron/TextField.svg?label=pod&logoColor=orange)](#)
+[![Source](https://img.shields.io/badge/source-private-red.svg)](https://github.com/Viveron/Podspecs)
+[![License](https://img.shields.io/github/license/Viveron/TextField.svg?colorB=424242)](https://github.com/Viveron/TextField/blob/master/LICENSE)
+[![Platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)](#)
 
 ## Example
 
@@ -17,13 +17,19 @@ TextField is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'TextField'
+pod 'TextField', :source => 'https://github.com/Viveron/Podspecs'
+```
+Or add the URL of a specs repository into Podfile for specifying location of pods:
+
+```ruby
+source 'https://github.com/Viveron/Podspecs'
+source 'https://github.com/CocoaPods/Specs.git'
 ```
 
 ## Author
 
-viveron, shabanov.dev.git@gmail.com
+Victor Shabanov, shabanov.dev.git@gmail.com
 
 ## License
 
-TextField is available under the MIT license. See the LICENSE file for more info.
+TextField is available under the [MIT license](https://github.com/Viveron/TextField/blob/master/LICENSE).
