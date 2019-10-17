@@ -8,6 +8,7 @@
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
+See example code in [Example project](https://github.com/Viveron/TextField/blob/master/Example/TextField/ViewController.swift) 
 
 ## Requirements
 
