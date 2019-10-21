@@ -9,6 +9,11 @@
 import UIKit
 import TextField
 
+class Some<T> where T: TextFieldManager<TextField> {
+    
+    let s = T()
+}
+
 class ViewController: UIViewController {
 
     let textField = TextField()

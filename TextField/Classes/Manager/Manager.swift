@@ -37,7 +37,7 @@ open class Manager<Element> where Element: AnyObject {
         }
     }
     
-    public init() {}
+    public required init() {}
     
     open func resetState() {
         state = .default

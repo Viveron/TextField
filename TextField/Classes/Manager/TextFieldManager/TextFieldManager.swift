@@ -22,6 +22,10 @@ open class TextFieldManager<Element>: Manager<Element> where Element: UITextFiel
         }
     }
     
+    public required init() {
+        super.init()
+    }
+    
     open override func reguster(for element: Element) {
         super.reguster(for: element)
         
