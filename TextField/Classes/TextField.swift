@@ -164,6 +164,12 @@ open class TextField: UITextField {
         }
     }
     
+    open var placeholderColor: UIColor? {
+        didSet {
+            updateAttributedPlaceholderIfChanged(placeholderColor, from: oldValue)
+        }
+    }
+    
     open var placeholderOnEditing: String? {
         willSet {
             if placeholderMode == .static {
@@ -190,13 +196,13 @@ open class TextField: UITextField {
     
     open override var text: String? {
         didSet {
-            layoutIfChanged(text, from: oldValue)
+            displayIfChanged(text, from: oldValue)
         }
     }
     
     open override var attributedText: NSAttributedString? {
         didSet {
-            layoutIfChanged(attributedText, from: oldValue)
+            displayIfChanged(attributedText, from: oldValue)
         }
     }
     
@@ -232,14 +238,13 @@ open class TextField: UITextField {
     
     open override var placeholder: String? {
         didSet {
-            layoutIfChanged(placeholder, from: oldValue)
+            updatePlaceholderIfChanged(placeholder, from: oldValue)
         }
     }
     
     open override var attributedPlaceholder: NSAttributedString? {
         didSet {
             layoutIfChanged(attributedPlaceholder, from: oldValue)
-            updatePlaceholderIfChanged(attributedPlaceholder, from: oldValue)
         }
     }
     
@@ -248,7 +253,7 @@ open class TextField: UITextField {
         
         addTarget(self,
                   action: #selector(_allEditingEventsAction),
-                  for: .allEditingEvents)
+                  for: [.allEditingEvents, .valueChanged])
         
         extraContentGuide.addOwningView(self)
     }
@@ -598,7 +603,10 @@ open class TextField: UITextField {
             attributes = attributedPlaceholder?.attributes(at: 0, effectiveRange: nil)
         } else {
             text = self.text
-            attributes = typingAttributes ?? defaultTextAttributes
+            // Ранее использованное значение `typingAttributes ?? defaultTextAttributes` для
+            // получения аттрибутов было не корректным, так как `typingAttributes` появляются
+            // только когда происходит ввод и отличаются значением от `defaultTextAttributes`
+            attributes = attributedText?.attributes(at: 0, effectiveRange: nil)
         }
         
         // Решение использовать функцию size(withAttributes:) было принято исходя из того,
@@ -612,6 +620,12 @@ open class TextField: UITextField {
         }
         
         return CGSize(width: bounds.width, height: size.height)
+    }
+    
+    private func displayIfChanged<T: Equatable>(_ value: T, from oldValue: T) {
+        if value != oldValue {
+            _allEditingEventsAction()
+        }
     }
     
     private func layoutIfChanged<T: Equatable>(_ value: T, from oldValue: T) {
@@ -632,22 +646,53 @@ open class TextField: UITextField {
     
     private func updatePlaceholderIfChanged<T: Equatable>(_ value: T, from oldValue: T) {
         if value != oldValue {
-            updatePlaceholderIfNeeded()
-        }
-    }
-    
-    private func updatePlaceholderIfNeeded() {
-        if placeholderMode == .dynamic {
             updatePlaceholder()
         }
     }
     
+    private func updateAttributedPlaceholderIfChanged<T: Equatable>(_ value: T, from oldValue: T) {
+        if value != oldValue {
+            updateAttributedPlaceholder()
+        }
+    }
+    
     private func updatePlaceholder() {
-        placeholder = isEditing ? placeholderOnEditing : placeholderOnEmpty
+        placeholder = actualPlaceholder()
+        
+        forceLayoutSubviewsIfNeeded()
+        updateAttributedPlaceholder()
+    }
+    
+    private func updateAttributedPlaceholder() {
+        let string = placeholder ?? ""
         
         if let attributedString = attributedPlaceholder {
-            attributedPlaceholder = attributedString.copy(withString: placeholder ?? "")
+            if let color = placeholderColor {
+                attributedPlaceholder = attributedString.copy(withString: string,
+                                                              name: .foregroundColor,
+                                                              value: color)
+            } else {
+                attributedPlaceholder = attributedString.copy(withString: string)
+            }
+        } else {
+            if let color = placeholderColor, let font = font {
+                let attributes: [NSAttributedString.Key: Any] = [
+                    .foregroundColor: color,
+                    .font: font
+                ]
+                
+                attributedPlaceholder = NSAttributedString(string: string,
+                                                           attributes: attributes)
+            }
         }
+    }
+    
+    private func actualPlaceholder() -> String? {
+        guard placeholderMode == .dynamic else {
+            return placeholder
+        }
+        
+        return isEditing ? placeholderOnEditing : placeholderOnEmpty
     }
     
     // MARK: - UI Actions
@@ -657,8 +702,7 @@ open class TextField: UITextField {
         displayExtraViewIfNeeded(supplyView, mode: supplyViewMode)
         displayIntraViewIfNeeded(prefixView, mode: prefixViewMode)
         displayIntraViewIfNeeded(suffixView, mode: suffixViewMode)
-
-        forceLayoutSubviewsIfNeeded()
-        updatePlaceholderIfNeeded()
+        
+        updatePlaceholder()
     }
 }

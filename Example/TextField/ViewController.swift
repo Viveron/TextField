@@ -9,17 +9,12 @@
 import UIKit
 import TextField
 
-class Some<T> where T: TextFieldManager<TextField> {
-    
-    let s = T()
-}
-
 class ViewController: UIViewController {
 
     let textField = TextField()
     let textFieldMediator = SimpleManager()
     
-    let leftView = IntrinsicView(CGSize(width: 10, height: 30))
+    let leftView = IntrinsicView(CGSize(width: 12, height: 30))
     let rightView = IntrinsicView(CGSize(width: 10, height: 30))
     
     let titleView = UILabel()
@@ -32,9 +27,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         makeLayout(textField)
-        textFieldMediator.reguster(for: textField)
+        textFieldMediator.register(for: textField)
         
         // 1. Placeholder
+        textField.placeholderColor = .red
         textField.placeholderOnEditing = "Placeholder"
         textField.placeholderOnEmpty = "Placeholder on empty text"
         textField.placeholderMode = .dynamic
@@ -52,7 +48,7 @@ class ViewController: UIViewController {
         textField.rightViewAlignment = .fill
 
         // 3. Prefix/Suffix view
-        textField.textAlignment = .center
+        textField.textAlignment = .left
 
         textField.prefixView = IntrinsicView(CGSize(width: 25, height: 25))
         textField.prefixView?.backgroundColor = .yellow
@@ -105,7 +101,7 @@ class ViewController: UIViewController {
     // MARK: - Helpers
     
     private func makeLayout(_ textField: UITextField) {
-        textField.backgroundColor = .gray
+        textField.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         view.addSubview(textField)
         
         textField.translatesAutoresizingMaskIntoConstraints = false

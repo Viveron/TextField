@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Manager<Element> where Element: AnyObject {
+open class Manager<Element>: NSObject where Element: AnyObject {
     
     private var isNeedsUpdateElement: Bool = true
     
@@ -37,13 +37,15 @@ open class Manager<Element> where Element: AnyObject {
         }
     }
     
-    public required init() {}
+    public override required init() {
+        super.init()
+    }
     
     open func resetState() {
         state = .default
     }
     
-    open func reguster(for element: Element) {
+    open func register(for element: Element) {
         self.element = element
         // override for registre for element events after that updates should occur
     }

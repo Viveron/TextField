@@ -26,8 +26,8 @@ open class TextFieldManager<Element>: Manager<Element> where Element: UITextFiel
         super.init()
     }
     
-    open override func reguster(for element: Element) {
-        super.reguster(for: element)
+    open override func register(for element: Element) {
+        super.register(for: element)
         
         element.addTarget(self,
                           action: #selector(allEditingEventsAction(_:)),

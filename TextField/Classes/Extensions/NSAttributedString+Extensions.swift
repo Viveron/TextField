@@ -15,4 +15,12 @@ internal extension NSAttributedString {
         mutable.mutableString.setString(string)
         return mutable
     }
+    
+    func copy(withString string: String, name: NSAttributedString.Key, value: Any) -> NSAttributedString {
+        let mutable = NSMutableAttributedString(attributedString: self)
+        let range = NSRange(location: 0, length: string.count)
+        mutable.mutableString.setString(string)
+        mutable.addAttribute(name, value: value, range: range)
+        return mutable
+    }
 }
