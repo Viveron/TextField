@@ -657,7 +657,9 @@ open class TextField: UITextField {
     }
     
     private func updatePlaceholder() {
-        placeholder = actualPlaceholder()
+        if placeholderMode == .dynamic {
+            placeholder = isEditing ? placeholderOnEditing : placeholderOnEmpty
+        }
         
         forceLayoutSubviewsIfNeeded()
         updateAttributedPlaceholder()
@@ -685,14 +687,6 @@ open class TextField: UITextField {
                                                            attributes: attributes)
             }
         }
-    }
-    
-    private func actualPlaceholder() -> String? {
-        guard placeholderMode == .dynamic else {
-            return placeholder
-        }
-        
-        return isEditing ? placeholderOnEditing : placeholderOnEmpty
     }
     
     // MARK: - UI Actions
