@@ -600,7 +600,9 @@ open class TextField: UITextField {
         
         if isEmpty {
             text = attributedPlaceholder?.string
-            attributes = attributedPlaceholder?.attributes(at: 0, effectiveRange: nil)
+            if !(text?.isEmpty ?? true) {
+                attributes = attributedPlaceholder?.attributes(at: 0, effectiveRange: nil)
+            }
         } else {
             text = self.text
             // Ранее использованное значение `typingAttributes ?? defaultTextAttributes` для

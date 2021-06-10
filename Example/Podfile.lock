@@ -1,5 +1,5 @@
 PODS:
-  - TextField (1.0.0)
+  - TextField (1.0.3)
 
 DEPENDENCIES:
   - TextField (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  TextField: 9be48fb54ae7dadf8bc6cb43c218952ab5ac99aa
+  TextField: 6094ac93e1ec8e474f312fbc4b2a5765d5535bf5
 
 PODFILE CHECKSUM: 7d94608ca6c8722c0b1871f042f1261e4c4114c3
 

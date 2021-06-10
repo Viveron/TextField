@@ -47,12 +47,17 @@ public final class LayoutGuide: UILayoutGuide {
         rightLayoutConstraint = rightAnchor.constraint(equalTo: view.rightAnchor)
         bottomLayoutConstraint = bottomAnchor.constraint(equalTo: view.bottomAnchor)
         
-        NSLayoutConstraint.activate([
+        let constraints = [
             topLayoutConstraint,
             leftLayoutConstraint,
             rightLayoutConstraint,
             bottomLayoutConstraint
-        ])
+        ]
+        
+        constraints.forEach {
+            $0?.priority = .required
+            $0?.isActive = true
+        }
     }
     
     // MARK: - Private methods

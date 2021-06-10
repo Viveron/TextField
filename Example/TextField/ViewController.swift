@@ -58,9 +58,9 @@ class ViewController: UIViewController {
 
         textField.suffixView = IntrinsicView(CGSize(width: 15, height: 20))
         textField.suffixView?.backgroundColor = .magenta
-        textField.suffixViewMode = .custom(true, true, false, true)
-        textField.suffixViewPosition = .dynamic
-        textField.suffixViewAlignment = .fill
+        textField.suffixViewMode = .always
+        textField.suffixViewPosition = .static
+        textField.suffixViewAlignment = .center
         textField.suffixViewTextSpacing = 5
         
         // 4. Title/Supply view
@@ -100,7 +100,7 @@ class ViewController: UIViewController {
     
     // MARK: - Helpers
     
-    private func makeLayout(_ textField: UITextField) {
+    private func makeLayout(_ textField: TextField) {
         textField.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         view.addSubview(textField)
         
