@@ -25,6 +25,7 @@ extension TextField {
         
         case never
         case whileEditing
+        case whileEditingAndNoEmpty
         case unlessEditing
         case always
         case custom(Bool, Bool, Bool, Bool)
@@ -38,6 +39,9 @@ extension TextField {
                 
             case .whileEditing:
                 return 0b00000101
+
+            case .whileEditingAndNoEmpty:
+                return 0b00001101
                 
             case .unlessEditing:
                 return 0b00001110
@@ -45,8 +49,8 @@ extension TextField {
             case .always:
                 return 0b00001111
                 
-            case let .custom(unpacked):
-                return ExtendedViewMode.pack(unpacked)
+            case let .custom(b0, b1, b2, b3):
+                return ExtendedViewMode.pack((b0, b1, b2, b3))
             }
         }
         
