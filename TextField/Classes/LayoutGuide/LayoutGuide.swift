@@ -2,8 +2,8 @@
 //  LayoutGuide.swift
 //  TextField
 //
-//  Created by Victor Shabanov on 17.10.2019.
-//  Copyright © 2019 Victor Shabanov. All rights reserved.
+//  Created by Viktor Shabanov on 17.10.2019.
+//  Copyright © 2019 Viktor Shabanov. All rights reserved.
 //
 
 import UIKit

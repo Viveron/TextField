@@ -31,7 +31,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 ## Author
 
-Victor Shabanov, shabanov.dev.git@gmail.com
+Viktor Shabanov, shabanov.dev.git@gmail.com
 
 ## License
 

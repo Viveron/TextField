@@ -3,6 +3,7 @@
 //  TextField
 //
 //  Created by Viktor Shabanov on 28.06.2021.
+//  Copyright © 2021 Viktor Shabanov. All rights reserved.
 //
 
 import UIKit

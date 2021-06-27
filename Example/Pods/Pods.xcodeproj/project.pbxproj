@@ -56,7 +56,7 @@
 		038098376A8A86D7A0A06A6A417BC637 /* Pods-TextField_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TextField_Example-frameworks.sh"; sourceTree = "<group>"; };
 		090618A6D91E53D16FD08B1D74BBFA3E /* Pods-TextField_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TextField_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		09FD53D131BE4C7F6ED2D70089800953 /* UIEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
-		0C732D6426892C1300CCECCB /* TextField+Trait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+Trait.swift"; sourceTree = "<group>"; };
+		0C732D6426892C1300CCECCB /* TextField+Trait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TextField+Trait.swift"; path = "TextField/Classes/TextField+Trait.swift"; sourceTree = "<group>"; };
 		1122256A5709D5601A965973D1B3CD01 /* Pods_TextField_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TextField_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17850CB03BBABB5D5D65E678286A6422 /* LayoutGuide+Kind.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LayoutGuide+Kind.swift"; sourceTree = "<group>"; };
 		18A1B0B684CB1D5EAFD9E59F4A5AB1FE /* TextField-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TextField-umbrella.h"; sourceTree = "<group>"; };
