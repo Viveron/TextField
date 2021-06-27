@@ -323,15 +323,15 @@ open class TextField: UITextField {
         var titleRect = bounds
         var supplyRect = bounds
         
-        if titleView != nil {
+        if titleView != nil, isNeedToDisplay(titleViewMode) {
             titleRect = titleViewRect(forBounds: bounds)
         }
-        if supplyView != nil {
+        if supplyView != nil, isNeedToDisplay(supplyViewMode) {
             supplyRect = supplyViewRect(forBounds: bounds)
         }
-        
-        titleView?.frame = isNeedToDisplay(titleViewMode) ? titleRect : bounds
-        supplyView?.frame = isNeedToDisplay(supplyViewMode) ? supplyRect : bounds
+
+        titleView?.frame = titleRect
+        supplyView?.frame = supplyRect
         
         let union = bounds.union(titleRect.union(supplyRect))
         var insets: UIEdgeInsets = .zero
