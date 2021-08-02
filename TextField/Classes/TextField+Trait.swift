@@ -12,9 +12,9 @@ extension TextField {
 
     public struct Trait: Equatable {
 
-        let isEnabled: Bool
-        let isEditing: Bool
-        let isEmpty: Bool
+        public let isEnabled: Bool
+        public let isEditing: Bool
+        public let isEmpty: Bool
 
         // MARK: - Equatable
 
