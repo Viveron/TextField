@@ -23,5 +23,5 @@ Extended version of UITextField. Lightweight implementation with helpful additio
   s.ios.deployment_target = '9.0'
   s.swift_version = '5.0'
   
-  s.source_files = 'TextField/Classes/**/*'
+  s.source_files = 'Sources/TextField/**/*'
 end

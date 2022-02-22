@@ -1,6 +1,6 @@
 {
   "name": "TextField",
-  "version": "1.0.4",
+  "version": "1.0.8",
   "summary": "Extended version of UITextField.",
   "description": "Extended version of UITextField. Lightweight implementation with helpful additional elements and objects.",
   "homepage": "https://github.com/viveron/TextField",
@@ -13,12 +13,12 @@
   },
   "source": {
     "git": "https://github.com/viveron/TextField.git",
-    "tag": "1.0.4"
+    "tag": "1.0.8"
   },
   "platforms": {
     "ios": "9.0"
   },
   "swift_versions": "5.0",
-  "source_files": "TextField/Classes/**/*",
+  "source_files": "Sources/TextField/**/*",
   "swift_version": "5.0"
 }
