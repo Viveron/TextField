@@ -191,6 +191,14 @@ open class TextField: UITextField {
             updatePlaceholderIfChanged(placeholderOnEmpty, from: oldValue)
         }
     }
+
+    /// Insets for adding some space inside of `UITextField` between
+    /// the border and contained text and elements views.
+    open var contentInsets: UIEdgeInsets = UIEdgeInsets(edges: 0) {
+        didSet {
+            updateContentInsetsIfChanged(contentInsets, from: oldValue)
+        }
+    }
     
     // MARK: - Overrided properties
     
@@ -279,11 +287,12 @@ open class TextField: UITextField {
     }
     
     open override func textRect(forBounds bounds: CGRect) -> CGRect {
-        let textRect = super.textRect(forBounds: bounds)
-        
-        let prefixSize = prefixViewSize(forBounds: bounds)
-        let suffixSize = suffixViewSize(forBounds: bounds)
-        
+        let contentBounds = textRectContentBounds(from: bounds)
+        let textRect = super.textRect(forBounds: contentBounds)
+
+        let prefixSize = prefixViewSize(forBounds: contentBounds)
+        let suffixSize = suffixViewSize(forBounds: contentBounds)
+
         let inset = UIEdgeInsets(left: prefixSize.width + prefixViewTextSpacing,
                                  right: suffixSize.width + suffixViewTextSpacing)
 
@@ -299,17 +308,19 @@ open class TextField: UITextField {
     }
     
     open override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
-        let size = super.leftViewRect(forBounds: bounds).size
-        
-        return intraViewRect(leftViewAlignment, bounds, size, .zero)
+        let contentBounds = leftViewRectContentBounds(from: bounds)
+        let size = super.leftViewRect(forBounds: contentBounds).size
+
+        return intraViewRect(leftViewAlignment, contentBounds, size, .zero)
     }
     
     open override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
-        let size = super.rightViewRect(forBounds: bounds).size
-        
-        return intraViewRect(rightViewAlignment, bounds, size, bounds.width - size.width)
+        let contentBounds = rightViewRectContentBounds(from: bounds)
+        let size = super.rightViewRect(forBounds: contentBounds).size
+
+        return intraViewRect(rightViewAlignment, contentBounds, size, bounds.width - size.width)
     }
-    
+
     open override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -362,9 +373,11 @@ open class TextField: UITextField {
         
         let textRect = self.textRect(forBounds: bounds)
         let textSize = self.textSize(forBounds: textRect)
-        
-        let prefixSize = prefixViewSize(forBounds: bounds)
-        let suffixSize = suffixViewSize(forBounds: bounds)
+
+        let contentBounds = bounds.inset(by: contentInsets)
+
+        let prefixSize = prefixViewSize(forBounds: contentBounds)
+        let suffixSize = suffixViewSize(forBounds: contentBounds)
         
         var prefixRect = CGRect(origin: .zero, size: prefixSize)
         var suffixRect = CGRect(origin: .zero, size: suffixSize)
@@ -373,7 +386,7 @@ open class TextField: UITextField {
         case .left:
             if isNeedsLayoutPrefixView {
                 let x = textRect.minX - prefixSize.width - prefixViewTextSpacing
-                prefixRect = intraViewRect(prefixViewAlignment, bounds, prefixSize, x)
+                prefixRect = intraViewRect(prefixViewAlignment, contentBounds, prefixSize, x)
             }
             if isNeedsLayoutSuffixView {
                 let x: CGFloat
@@ -382,7 +395,7 @@ open class TextField: UITextField {
                 } else {
                     x = textRect.maxX + suffixViewTextSpacing
                 }
-                suffixRect = intraViewRect(suffixViewAlignment, bounds, suffixSize, x)
+                suffixRect = intraViewRect(suffixViewAlignment, contentBounds, suffixSize, x)
             }
             
         case .right:
@@ -393,11 +406,11 @@ open class TextField: UITextField {
                 } else {
                     x = textRect.minX - prefixSize.width - prefixViewTextSpacing
                 }
-                prefixRect = intraViewRect(prefixViewAlignment, bounds, prefixSize, x)
+                prefixRect = intraViewRect(prefixViewAlignment, contentBounds, prefixSize, x)
             }
             if isNeedsLayoutSuffixView {
                 let x = textRect.maxX + suffixViewTextSpacing
-                suffixRect = intraViewRect(suffixViewAlignment, bounds, suffixSize, x)
+                suffixRect = intraViewRect(suffixViewAlignment, contentBounds, suffixSize, x)
             }
             
         case .center:
@@ -409,7 +422,7 @@ open class TextField: UITextField {
                 } else {
                     x = textRect.minX - prefixViewTextSpacing
                 }
-                prefixRect = intraViewRect(prefixViewAlignment, bounds, prefixSize, x - prefixSize.width)
+                prefixRect = intraViewRect(prefixViewAlignment, contentBounds, prefixSize, x - prefixSize.width)
             }
             if isNeedsLayoutSuffixView {
                 let x: CGFloat
@@ -419,12 +432,40 @@ open class TextField: UITextField {
                 } else {
                     x = textRect.maxX + suffixViewTextSpacing
                 }
-                suffixRect = intraViewRect(suffixViewAlignment, bounds, suffixSize, x)
+                suffixRect = intraViewRect(suffixViewAlignment, contentBounds, suffixSize, x)
             }
         }
         
         prefixView?.frame = prefixRect
         suffixView?.frame = suffixRect
+    }
+
+    /// Bounds for rect of text with applied `contentInsets` values
+    private func textRectContentBounds(from bounds: CGRect) -> CGRect {
+        var insets = contentInsets
+        // If leftView is displayed then no need for additional inset,
+        // but if not - we will add all contentInsets values ourselves
+        if isDisplayedLeftView {
+            insets.left = 0
+        }
+
+        return bounds.inset(by: insets)
+    }
+
+    /// Bounds for rect of `leftView` with applied `contentInsets` values
+    private func leftViewRectContentBounds(from bounds: CGRect) -> CGRect {
+        var insets = contentInsets
+        insets.right = 0
+
+        return bounds.inset(by: insets)
+    }
+
+    /// Bounds for rect of `rightView` with applied `contentInsets` values
+    private func rightViewRectContentBounds(from bounds: CGRect) -> CGRect {
+        var insets = contentInsets
+        insets.left = 0
+
+        return bounds.inset(by: insets)
     }
     
     private func updateExtraView(_ view: UIView?, with newValue: UIView?, mode: ExtendedViewMode) {
@@ -561,7 +602,7 @@ open class TextField: UITextField {
                                _ size: CGSize,
                                _ x: CGFloat) -> CGRect {
         
-        var origin = CGPoint(x: x, y: 0)
+        var origin = CGPoint(x: x, y: contentInsets.top)
         var size = size
         
         switch alignment {
@@ -642,6 +683,12 @@ open class TextField: UITextField {
     
     private func forceLayoutSubviewsIfNeeded() {
         if checkIfNeedsForceLayoutSubviews() {
+            forceLayoutSubviews()
+        }
+    }
+
+    private func updateContentInsetsIfChanged<T: Equatable>(_ value: T, from oldValue: T) {
+        if value != oldValue {
             forceLayoutSubviews()
         }
     }

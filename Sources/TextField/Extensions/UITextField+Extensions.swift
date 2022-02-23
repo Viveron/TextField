@@ -46,4 +46,38 @@ internal extension UITextField {
     var isEmpty: Bool {
         return text?.isEmpty ?? true
     }
+
+    var isDisplayedLeftView: Bool {
+        return isDisplayed(leftView, with: leftViewMode)
+    }
+
+    var isDisplayedRightView: Bool {
+        return isDisplayed(rightView, with: rightViewMode)
+    }
+
+    // MARK: - Helpers
+
+    private func isDisplayed(_ view: UIView?, with mode: ViewMode) -> Bool {
+        guard view != nil else {
+            return false
+        }
+
+        switch mode {
+        case .never:
+            return false
+
+        case .whileEditing:
+            return isEditing
+
+        case .unlessEditing:
+            // Yeath, apple's '.unlessEditing' mode just is not simple
+            return !isEditing || (isEditing && isEmpty)
+
+        case .always:
+            return true
+
+        @unknown default:
+            return false
+        }
+    }
 }

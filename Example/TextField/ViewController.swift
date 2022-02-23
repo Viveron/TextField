@@ -25,7 +25,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        textField.contentInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        textField.layer.cornerRadius = 5
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+
         makeLayout(textField)
         textFieldMediator.register(for: textField)
         
